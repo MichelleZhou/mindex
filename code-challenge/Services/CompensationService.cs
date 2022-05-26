@@ -19,8 +19,8 @@ namespace challenge.Services
         public async Task<Compensation> CreateOrUpdate(Compensation compensation)
         {
             // If Employee doesn't exist, add it. 
-            var existingEmployee = _employeeRepository.GetById(compensation.Employee.EmployeeId.ToString());
-            if (existingEmployee == null)
+            if (string.IsNullOrEmpty(compensation.Employee.EmployeeId)
+                || _employeeRepository.GetById(compensation.Employee.EmployeeId.ToString()) == null)
             {
                 _employeeRepository.Add(compensation.Employee);
                 await _employeeRepository.SaveAsync();
